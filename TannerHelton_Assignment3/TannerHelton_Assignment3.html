@@ -1,19 +1,79 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Helton's Tab Page</title>
-    <link rel="stylesheet" href="main.css">
-</head>
-<body>
-    <script src="main.js"></script>
-    <button class="active" id="1">A</button>
-    <button id="2">B</button>
-    <button id="3">C</button>
-    <div>
-        <p></p>
-    </div>
-</body>
+<!-- Sets doctype html -->
+<!doctype html>
+<!-- Opening HTML tag -->
+<html>
+    <!-- Opening HEAD tag -->
+    <head>
+        <!-- Sets the charset to UTF8 -->
+        <meta charset="UTF-8">
+        <!-- Sets the title of the page -->
+        <title>Helton's Tab Page</title>
+    </head>
+    <!-- Opens the body -->
+    <body>
+        <!-- Tab panel element houses each tab -->
+        <tab-panel>
+            <!-- These three are the tab's and their content. Note the data-tabname field that is used to pupulate the buttons -->
+            <div data-tabname="A">Tab A</div>
+            <div data-tabname="B">Tab B</div>
+            <div data-tabname="C">Tab C</div>
+        </tab-panel>
+        <!-- Open script for some JS -->
+        <script>
+            // Create asTabs function with a parameter of topNode
+            function asTabs(topNode) {
+                // Create tabs array to be populated from the tab-panel
+                var tabs = [];
+                // Go through the node parameter and find all the element node children - then add these to the tabs array
+                for (var i = 0; i < topNode.childNodes.length; i++) {
+                    // Create tmp child variable to hold the children
+                    var child = topNode.childNodes[i];
+                    // Check if it is an element node
+                    if (child.nodeType == document.ELEMENT_NODE) {
+                        // Add it to the array if it is an element node
+                        tabs.push(child);
+                    }
+                }
+
+                // Create a tab container div
+                var tabCont = document.createElement("div");
+                // Cycle through all the tabs
+                tabs.forEach((tab, i) => {
+                    // Create a button that will be used as tab header
+                    var btn = document.createElement("button");
+                    // Set the tab name via the field data-tabname
+                    btn.textContent = tab.getAttribute("data-tabname");
+                    // Add a listener for the button click so that it changes tabs
+                    btn.addEventListener("click", () => selectTab(i));
+                    // Add the button to the tab container
+                    tabCont.appendChild(btn);
+                });
+                // Add the tab container to the beginning of the top node
+                topNode.insertBefore(tabCont, topNode.firstChild);
+
+                // Create a select tab function (used to switch when buttons are pressed)
+                function selectTab(n) {
+                    // Run through each tab
+                    tabs.forEach((tab, i) => {
+                        // Check if the tab on this iteration matches the index passed as a parameter
+                        if (i == n) {
+                            // If it is a match display the tab content
+                            tab.style.display = "";
+                            // If it is a match display the tab header in red
+                            document.querySelectorAll("button")[i].style.color = "red";
+                        } else {
+                            // If it is not a match hide the content
+                            tab.style.display = "none";
+                            // If it is not a match disable the red
+                            document.querySelectorAll("button")[i].style.color = "black";
+                        }
+                    });
+                }
+                // Calls select tab with index 0 to set the initial condition
+                selectTab(0);
+            }
+            // Calls asTabs with the tab-panel as the topNode
+            asTabs(document.querySelector("tab-panel"));
+        </script>
+    </body>
 </html>
