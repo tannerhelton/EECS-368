@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+    <canvas></canvas>
+    <script>
+        let cx = document.querySelector("canvas").getContext("2d");
+        cx.beginPath();
+        cx.moveTo(40, 10);
+        cx.lineTo(60, 10);
+        cx.moveTo(30, 30);
+        cx.lineTo(70, 30);
+        cx.moveTo(40, 10);
+        cx.lineTo(30,30);
+        cx.moveTo(60, 10);
+        cx.lineTo(70,30);
+        cx.stroke();
+    </script>
+</body>
+</html>

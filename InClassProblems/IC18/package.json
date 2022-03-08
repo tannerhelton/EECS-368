@@ -1,0 +1,14 @@
+{
+  "name": "ic18",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main2.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "echo.js": "^1.0.0"
+  },
+  "author": "Tanner Helton",
+  "license": "ISC"
+}

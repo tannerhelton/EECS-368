@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+    <canvas></canvas>
+<script>
+    let cx = document.querySelector("canvas").getContext("2d");
+    cx.beginPath();
+    cx.moveTo (20, 70);
+    cx.quadraticCurveTo(60, 10, 70, 80);
+    cx.stroke();
+    </script>
+    <script>
+        let cx = document.querySelector("canvas").getContext("2d");
+        cx.beginPath();
+        cx.moveTo (20, 90);
+        // control1=(10,10) control2=(90,10) goal=(50,90)
+        cx.bezierCurveTo(20, 10, 100, 10, 60, 90);
+        cx.lineTo(100, 10);
+        cx.lineTo(20, 10);
+        cx.closePath();
+        cx.stroke();
+        cx.fill();
+        </script>
+</body>
+</html>

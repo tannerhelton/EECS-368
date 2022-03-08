@@ -1,0 +1,9 @@
+<html>
+  <body>
+    <script>
+      fetch("http://eloquentjavascript.net/18_http.html ", { method: "GET", headers: { "User-Agent": "Google Chrome" }}).then((resp) => {
+        console.log(resp.status);
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <select multiple>
+        <option value="1">0001</option>
+        <option value="2">0010</option>
+        <option value="4">0100</option>
+        <option value="8">1000</option>
+        </select> = <span id="output">0</span>
+        <script>
+        let select = document.querySelector("select");
+        let output = document.querySelector("#output");
+        // Add change event function to the select object
+        select.addEventListener("change", () => {
+        let number = 0;
+        // Run through all options in the selector
+        for (let option of Array.from(select.options)) {
+            // Check if the option is selected
+            if (option.selected) {
+                // If the option is selected, add it's value to to the already existing value of number
+                number += Number(option.value);
+            }
+        }
+        // Update the output to have the sum
+        output.textContent = number;
+        });
+        </script>
+</body>
+</html>

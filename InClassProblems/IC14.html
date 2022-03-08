@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<!-- HTML open tag -->
+<html lang="en">
+<!-- HEAD tags go here -->
+<head>
+    <!-- Set the charset to UTF-8 -->
+    <meta charset="UTF-8">
+    <!-- Close the head tag -->
+</head>
+<!-- Open the body tag -->
+<body>
+    <!-- Create the canvas -->
+    <canvas></canvas>
+    <!-- Run some JS -->
+    <script>
+    // set cx to the canvas and then set it to 2d
+    let cx = document.querySelector("canvas").getContext("2d");
+    cx.scale(3, .5); //scale everything from here on
+    cx.beginPath(); //tells Canvas we’re going to draw a path
+    cx.arc(50, 50, 40, 0, Math.PI); //draw a semi circle
+    cx.lineWidth = 3; //set line width to 3 pixels
+    cx.stroke(); //draw it
+    // Close the script
+    </script>
+<!-- Close the body -->
+</body>
+<!-- Close the HTML -->
+</html>
