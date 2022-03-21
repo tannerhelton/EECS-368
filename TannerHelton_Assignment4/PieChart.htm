@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pie Chart</title>
+</head>
+
+<body>
+    <!-- Center Tag centers all the content on the screen so that there is plenty of room around the chart -->
+    <center>
+        <!-- Canvas 1 and 2 are made here, both are 400x400 -->
+        <canvas id="1" width="400" height="400"></canvas>
+        <!-- br just seperates the canvases so that it's easier to see which tags go where -->
+        <br>
+        <canvas id="2" width="400" height="400"></canvas>
+    </center>
+    <!-- Open a JS script -->
+    <script>
+
+        // Below is the code for the first chart
+
+        // Encode the values into results1 for the first chart
+        const results1 = [
+            { name: "Satisfied", count: 927, color: "lightblue" },
+            { name: "Neutral", count: 463, color: "lightgreen" },
+            { name: "Unsatisfied", count: 510, color: "pink" },
+            { name: "No comment", count: 102, color: "silver" }
+        ];
+        // set cx1 to the first canvas
+        let cx1 = document.getElementById("1").getContext("2d");
+        // find the total number of votes in the dataset
+        let total1 = results1.reduce((sum, { count }) => sum + count, 0);
+        // Initialize the current angle (starts at the top)
+        let currentAngle1 = -0.5 * Math.PI;
+        // Run a for loop for each of the results in the data set
+        for (let result of results1) {
+            // Set the slice angle equal to the relative size of the slice's votes to the total votes
+            let sliceAngle = (result.count / total1) * 2 * Math.PI;
+            // Set a middle angle that is halfway between the slice angle
+            let middleAngle = currentAngle1 + 0.5 * sliceAngle;
+            // Calculates the text's x value based on the middle angle
+            let textX = Math.cos(middleAngle) * 120 + 200;
+            // Calculates the text's y value based on the middle angle
+            let textY = Math.sin(middleAngle) * 120 + 200;
+            // Set the font to 14px georgia
+            cx1.font = "14px Georgia";
+            // Set font color black
+            cx1.fillStyle = "black";
+            // The text baselie (where the text's position is indicated) to the middle
+            cx1.textBaseline = "middle";
+            // Check if the value is on the right or left side of the circle, and align the text so that it interfers the least
+            if (textX > 200) {
+                cx1.textAlign = "left";
+            } else {
+                cx1.textAlign = "right";
+            }
+            // Fill the text with the name of the result at textX and textY
+            cx1.fillText(result.name, textX, textY);
+            // Begin drawing a path
+            cx1.beginPath();
+            // Draw an arc from current angle, clockwise by slice's angle
+            cx1.arc(200, 200, 100,
+                currentAngle1, currentAngle1 + sliceAngle);
+            // Increment the current angle for the next iteration
+            currentAngle1 += sliceAngle;
+            // Draw a line back to the center
+            cx1.lineTo(200, 200);
+            // Set the color specified in the dataset
+            cx1.fillStyle = result.color;
+            // Actually fill the slice
+            cx1.fill();
+        }
+
+        // Below is the code for the second chart
+
+
+        // Encode the values into results2 for the second chart
+        const results2 = [
+            { name: "Very happy", count: 63, color: "lightblue" },
+            { name: "Happy", count: 104, color: "lightgreen" },
+            { name: "Neutral", count: 87, color: "pink" },
+            { name: "Unhappy", count: 51, color: "silver" },
+            { name: "Very Unhappy", count: 26, color: "black" },
+            { name: "No Comment", count: 18, color: "red" }
+        ];
+        // set cx2 to the first canvas
+        let cx2 = document.getElementById("2").getContext("2d");
+        // find the total number of votes in the dataset
+        let total2 = results2.reduce((sum, { count }) => sum + count, 0);
+        // Initialize the current angle (starts at the top)
+        let currentAngle2 = -0.5 * Math.PI;
+        // Run a for loop for each of the results in the data set
+        for (let result of results2) {
+            // Set the slice angle equal to the relative size of the slice's votes to the total votes
+            let sliceAngle = (result.count / total2) * 2 * Math.PI;
+            // Set a middle angle that is halfway between the slice angle
+            let middleAngle = currentAngle2 + 0.5 * sliceAngle;
+            // Calculates the text's x value based on the middle angle
+            let textX = Math.cos(middleAngle) * 120 + 200;
+            // Calculates the text's y value based on the middle angle
+            let textY = Math.sin(middleAngle) * 120 + 200;
+            // Set the font to 14px georgia
+            cx2.font = "14px Georgia";
+            // Set font color black
+            cx2.fillStyle = "black";
+            // The text baselie (where the text's position is indicated) to the middle
+            cx2.textBaseline = "middle";
+            // Check if the value is on the right or left side of the circle, and align the text so that it interfers the least
+            if (textX > 200) {
+                cx2.textAlign = "left";
+            } else {
+                cx2.textAlign = "right";
+            }
+            // Fill the text with the name of the result at textX and textY
+            cx2.fillText(result.name, textX, textY);
+            // Begin drawing a path
+            cx2.beginPath();
+            // Draw an arc from current angle, clockwise by slice's angle
+            cx2.arc(200, 200, 100,
+                currentAngle2, currentAngle2 + sliceAngle);
+            // Increment the current angle for the next iteration
+            currentAngle2 += sliceAngle;
+            // Draw a line back to the center
+            cx2.lineTo(200, 200);
+            // Set the color specified in the dataset
+            cx2.fillStyle = result.color;
+            // Actually fill the slice
+            cx2.fill();
+        }
+    </script>
+</body>
+
+</html>
