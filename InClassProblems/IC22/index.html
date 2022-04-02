@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Server</title>
+</head>
+<body>
+    <script>
+        fetch("http://localhost:8000/notes.txt").then(resp => {
+            document.getElementById("notes").value = resp;
+        });
+        const submitForm = () => {
+            var txt = document.getElementById("notes").value;
+            fetch('http://localhost:8000/notes.txt', {
+                method: "PUT",
+                body: txt,
+                headers: {
+                    'Content-type': 'text/plain'
+                }
+            });
+        };
+    </script>
+
+    <div>
+        <h1>Notes Website</h1>
+        <p>This website keeps a notes file for you</p>
+        <form>
+            <label for="notes">Notes:</label><br>
+            <textarea id="notes" name="notes" rows="8" cols="50"></textarea><br>
+        </form>
+        <button onclick="submitForm();">Save</button>
+    </div>
+</body>
+</html>
