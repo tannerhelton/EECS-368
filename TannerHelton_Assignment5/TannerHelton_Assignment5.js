@@ -83,8 +83,10 @@ methods.GET = async function (request) {
   }
   // If there is a directory
   if (stats.isDirectory()) {
+    // If there is a directory read into the directory
     return { body: (await readdir(path)).join("\n") };
   } else {
+    // If no directory, return the file
     return { body: createReadStream(path), type: mime.getType(path) };
   }
 };
@@ -94,34 +96,49 @@ const { rmdir, unlink } = require("fs").promises;
 
 // Create an async function for the DELETE method
 methods.DELETE = async function (request) {
+  // Set path to the parsed request URL
   let path = urlPath(request.url);
+  // Declare stats
   let stats;
+  // Try to set stats to the stat(path)
   try {
     stats = await stat(path);
   } catch (error) {
+    // If error, then throw the error
     if (error.code != "ENOENT") throw error;
+    // else return status 204 (no-content)
     else return { status: 204 };
   }
+  // If stats is a directory, remove directory
   if (stats.isDirectory()) await rmdir(path);
+  // Else unlink the path
   else await unlink(path);
+  // return 204 (no-content)
   return { status: 204 };
 };
 
+// Import createWriteStream from filesystem (used for making files/direcories)
 const { createWriteStream } = require("fs");
 
+// Pipe stream to write data
 function pipeStream(from, to) {
+  // Create and return a new promise
   return new Promise((resolve, reject) => {
     from.on("error", reject);
     to.on("error", reject);
     to.on("finish", resolve);
+    // Pipe data from the from parameter to the to parameter
     from.pipe(to);
   });
 }
 
 // Create an async function for the PUT method
 methods.PUT = async function (request) {
+  // Set path to the parsed request URL
   let path = urlPath(request.url);
+  // Wait for pipeStream to take the request and create a writestream at the path
   await pipeStream(request, createWriteStream(path));
+  // Return 204
   return { status: 204 };
 };
 
@@ -129,15 +146,23 @@ const { mkdir } = require("fs").promises;
 
 // Create an async function for the MKCOL method
 methods.MKCOL = async function (request) {
+  // Set path to the parsed request URL
   let path = urlPath(request.url);
+  // Declare stats
   let stats;
+  // Try to set stats to the stat(path)
   try {
     stats = await stat(path);
   } catch (error) {
+    // If error, then throw the error
     if (error.code != "ENOENT") throw error;
+    // Else, make the directory
     await mkdir(path);
+    // return status 204
     return { status: 204 };
   }
+  // If the request is for a directory, then return status 204
   if (stats.isDirectory()) return { status: 204 };
+  // Else return 400 and "Not a directory"
   else return { status: 400, body: "Not a directory" };
 };
